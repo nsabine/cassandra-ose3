@@ -25,7 +25,7 @@ spec:
             - name: HEAP_NEWSIZE
               value: 100M
             - name: KUBE_API_SERVER
-              value: https://master.ose3.kenscloud.io:8443
+              value: https://172.30.0.1:443
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
