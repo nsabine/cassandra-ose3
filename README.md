@@ -27,24 +27,27 @@ oc policy add-role-to-group view system:serviceaccounts -n <<project name>>>
 cd casandra-ose
 ```
 
-7.) Create a claim on the persistent volume
+7.) Create the Cassandra cluster
 ```console
-oc create -f casandra-pvc.yaml
+oc create -f cassandra.yaml
 ```
 
-8.) Create the cassandra service
+8.) Verify three Pods are in Running state
 ```console
-oc create -f cassandra-service.yaml
+oc get pods -l name=cassandra
 ```
 
-9.) Earlier I mentioned I altered the Java code.  I changed it such that you now specify your Kube API server as an environment variable.  Open up the cassandra-controller.yaml and change the value to point to your OpenShift master.  Don't forget the port.
+9.) Verify three Pods are in Running state
 ```console
-vim cassandra-controller.yaml
+oc get pods -l name=cassandra
 ```
 
-10.) Create the controller.
+10.) Check the pod logs as cassandra is starting.  Replace POD_ID with the name of the cassandra pod from `oc get pods`.
 ```console
-oc create -f cassandra-controller.yaml
+oc logs POD_ID 
 ```
 
-11.) Execute the tests in the other readme file.
+11.) Verify Cassandra cluster is running with all three cluster members.  Replace POD_ID with the name of the cassandra pod from `oc get pods`.
+```console
+oc exec POD_ID -- nodetool status
+```
